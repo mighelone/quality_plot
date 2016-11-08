@@ -1,0 +1,65 @@
+# volatile composition
+# now the direct composition is given
+# in future we can also assign the C, H, O, N ultimate analysis
+# temperature can be given as list, arange or linspace, logspace followed by a list of values
+# arange or linspace, logspace are numpy functions
+volatiles:
+  Y:
+    CH4: 0.005472
+    C6H6: 0.224332
+    C2H4: 0.370435
+    CO: 0.376965
+    H2: 0.002356
+    N2: 0.020440
+  T:
+    min: 300
+    max: 700
+
+oxidizer:
+  X:
+    N2: 0.79
+    O2: 0.21
+  T:
+    min: 300
+    max: 700
+
+mechanism:
+    ../mechanism/52.xml
+
+# two mixture fractions are defined Z1 and Z2, which are respectively the devolatilization and
+# the char burnout gases
+# Z = Z1 + Z2 defined in [0:1]
+# Y = Z1 / (Z1 + Z2) defined in [0:1]
+flut:
+  Z:
+    points: 201
+  Y:
+    method: list
+    values: [1]
+    #method: linspace
+    #values:
+    #  - 0
+    #  - 1
+    #  - 31
+  chist:
+    #method: list
+    #values: [1e3]
+    method: logspace
+    values: [-3.0, 3.0, 101]
+
+  Hnorm:
+    positive:
+        points: 6
+        # points: 3
+    negative:
+        method: list
+        #values: [-2, -1.5, -1.0, -0.5]
+        values: []
+    Z: 0.2
+# ulf settings
+# additional settings can be modified directly from the reference ulf file:
+# "basename".ulf
+ulf:
+  solver: /shared_home/vascella/Codes/ulf/build_git2/ulf.x
+  basename: flamelet
+  format: "{:9.8f}"
